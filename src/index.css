@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inputBox {
+  background: transparent;
+  border: 1px solid green;
+  border-radius: 10px;
+  width: 500px;
+  padding: 10px;
+  transition: 0.3s all;
+}
+
+.inputBox:focus {
+  box-shadow: 1px 1px 10px 1px green;
+  outline: none;
+}
+.formContainer{
+     box-shadow: -1px 1px 9px -1px green;
+}
