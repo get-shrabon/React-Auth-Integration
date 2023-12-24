@@ -55,13 +55,16 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{Links}</ul>
         </div>
         <div className="navbar-end gap-3">
-          {
-            user && <p>{user.email}</p>
-          }
-          {
-            user ? <button onClick={handleLogOut} className="btn btn-error">LogOut</button> : <Link className="btn btn-accent" to="/login">Login</Link>
-          }
-
+          {user && <p>{user.email}</p>}
+          {user ? (
+            <button onClick={handleLogOut} className="btn btn-error">
+              LogOut
+            </button>
+          ) : (
+            <Link className="btn btn-accent" to="/login">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
