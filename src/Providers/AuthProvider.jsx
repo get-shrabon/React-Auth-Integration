@@ -1,13 +1,43 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import App from "../App";
 import app from "../Firebase/Firebase.Config";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-const Auth = getAuth(app)
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+const Auth = getAuth(app);
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
-  const AuthInfo = { name: "Hello World From UseContext" };
+  const [user, setUser] = useState(null);
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(Auth, email, password);
+  };
+  const loginUser = (email, password) => {
+    return signInWithEmailAndPassword(Auth, email, password);
+  };
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(Auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => {
+      unSubscribe();
+    };
+  }, []);
+  const logOut = () => {
+    signOut(Auth)
+      .then(() => {
+        console.log("Sign Out Successful");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  const AuthInfo = { user, createUser, loginUser, logOut };
+
   return (
     <AuthContext.Provider value={AuthInfo}>{children}</AuthContext.Provider>
   );

@@ -1,13 +1,24 @@
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
+
 const LoginPage = () => {
+  const { loginUser } = useContext(AuthContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password)
+    console.log(email, password);
+    loginUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
   return (
     <div>
-      <div className="hero min-h-screen container mx-auto px-20 bg-base-200">
+      <div className="hero min-h-screen container py-10 mx-auto px-20 bg-base-200">
         <div className="">
           <div className="text-center mb-5">
             <h1 className="text-5xl font-bold">Login now!</h1>
